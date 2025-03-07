@@ -1,0 +1,158 @@
+﻿<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-image: url('../../images/bgimage5.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+        }
+
+        .navbar-brand {
+            color: white;
+        }
+
+            .navbar-brand:hover {
+                color: lightgray;
+            }
+
+
+        .nav-link {
+             color: white;
+        }
+
+            .nav-link:hover {
+                color: lightgray;
+            }
+
+
+        .custom-link {
+            color: white;
+            margin-left: 15px;
+        }
+
+
+        .footer {
+            width: 115.5%;
+            margin-left: -100px;
+        }
+
+        .footer-container {
+            background-color: Gainsboro;
+            padding: 30px;
+            color: darkblue;
+            text-align: center;
+        }
+
+        .footer-section {
+            margin-left: 200px;
+        }
+    </style>
+</head>
+
+
+
+
+<body>
+
+
+    @*<p>Controller: @ViewContext.RouteData.Values["Controller"]</p>
+        <p>Action: @ViewContext.RouteData.Values["Action"]</p>*@
+
+
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm @*navbar-dark bg-dark*@" style="background-color: #165CD4;">
+        <div class="container">
+            @Html.ActionLink("Employee Registration", "Create", "registrations", new { area = "" }, new { @class = "navbar-brand" })
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li>  @Html.ActionLink("Login", "Create", "LoginPages", new { area = "" }, new { @class = "nav-link" })</li>
+                    @*<li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>*@
+
+
+                    @if (ViewContext.RouteData.Values["Controller"]?.ToString() == "HR"
+                        && ViewContext.RouteData.Values["Action"]?.ToString() == "Index")
+                    {
+                        <li><a href="@Url.Action("Create", "EmployeeDetails")" class="nav-link custom-link"> Add Employee</a></li>
+                    }
+
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        @*<hr style=" border:1px solid darkred; margin-bottom:0px;">*@
+
+
+
+
+
+        <footer class="footer">
+
+            <div class="footer-container" style="display:flex;">
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <p>Email: info@Proteckhy.com</p>
+                    <p>Phone: +1-992-086-1902</p>
+                    <p>Address:Hyderabad</p>
+                </div>
+
+                <div class="footer-section" style="margin-left:40px; text-decoration:none">
+                    <h3>Links</h3>
+
+
+                    <a href="/services">Services</a><br>
+
+                    <a href="/privacy">Privacy Policy</a><br>
+                    <a href="/terms">Terms of Service</a>
+
+                </div>
+
+                <div class="footer-section" style="margin-left: 40px; text-decoration: none">
+                    <h3>Follow Us</h3>
+                    <a href="https://facebook.com">Facebook</a><br>
+                    <a href="https://twitter.com">Twitter</a><br>
+                    <a href="https://linkedin.com">LinkedIn</a><br>
+                    <a href="https://instagram.com">Instagram</a>
+                </div>
+
+
+
+                <div class="footer-section" style="margin-left: 40px;">
+
+
+                    <p>&copy; @DateTime.Now.Year - Proteckhy.All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+
+
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

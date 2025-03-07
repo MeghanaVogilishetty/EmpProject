@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EmployeeProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Dept">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Department" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Dtable">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Designation" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="EmployeeDetails">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Firstname" Type="varchar" MaxLength="20" />
+          <Property Name="Lastname" Type="varchar" MaxLength="20" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="bigint" />
+          <Property Name="Gender" Type="varchar" MaxLength="20" />
+          <Property Name="DateOfBirth" Type="date" />
+          <Property Name="ReportingManager" Type="varchar" MaxLength="30" />
+          <Property Name="JoiningDate" Type="date" />
+          <Property Name="WorkLocation" Type="varchar" MaxLength="30" />
+          <Property Name="Salary" Type="int" />
+          <Property Name="ActiveStatus" Type="bit" />
+          <Property Name="Street" Type="nvarchar" MaxLength="30" />
+          <Property Name="City" Type="nvarchar" MaxLength="30" />
+          <Property Name="State" Type="nvarchar" MaxLength="30" />
+          <Property Name="Pincode" Type="int" />
+          <Property Name="Country" Type="nvarchar" MaxLength="30" />
+          <Property Name="EmployeeType" Type="int" />
+          <Property Name="Designation" Type="int" />
+          <Property Name="Department" Type="int" />
+          <Property Name="SubDepartment" Type="int" />
+        </EntityType>
+        <EntityType Name="EmpType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeType" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="LoginPage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="Designation" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="registration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Firstname" Type="varchar" MaxLength="50" />
+          <Property Name="Lastname" Type="varchar" MaxLength="50" />
+          <Property Name="Username" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phonenumber" Type="bigint" />
+          <Property Name="DateOfBirth" Type="date" />
+          <Property Name="Address" Type="varchar" MaxLength="50" />
+          <Property Name="Designation" Type="int" />
+        </EntityType>
+        <EntityType Name="SubDept">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubDepartment" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <Association Name="FK__EmployeeD__Depar__0A9D95DB">
+          <End Role="Dept" Type="Self.Dept" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dept">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EmployeeDetails">
+              <PropertyRef Name="Department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EmployeeD__Desig__05D8E0BE">
+          <End Role="Dtable" Type="Self.Dtable" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dtable">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EmployeeDetails">
+              <PropertyRef Name="Designation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EmployeeD__Emplo__04E4BC85">
+          <End Role="EmpType" Type="Self.EmpType" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EmployeeDetails">
+              <PropertyRef Name="EmployeeType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EmployeeD__SubDe__0F624AF8">
+          <End Role="SubDept" Type="Self.SubDept" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubDept">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EmployeeDetails">
+              <PropertyRef Name="SubDepartment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__registrat__Desig__75A278F5">
+          <End Role="Dtable" Type="Self.Dtable" Multiplicity="0..1" />
+          <End Role="registration" Type="Self.registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dtable">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="registration">
+              <PropertyRef Name="Designation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmployeeProjectModelStoreContainer">
+          <EntitySet Name="Dept" EntityType="Self.Dept" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dtable" EntityType="Self.Dtable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpType" EntityType="Self.EmpType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoginPage" EntityType="Self.LoginPage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="registration" EntityType="Self.registration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubDept" EntityType="Self.SubDept" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__EmployeeD__Depar__0A9D95DB" Association="Self.FK__EmployeeD__Depar__0A9D95DB">
+            <End Role="Dept" EntitySet="Dept" />
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeD__Desig__05D8E0BE" Association="Self.FK__EmployeeD__Desig__05D8E0BE">
+            <End Role="Dtable" EntitySet="Dtable" />
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeD__Emplo__04E4BC85" Association="Self.FK__EmployeeD__Emplo__04E4BC85">
+            <End Role="EmpType" EntitySet="EmpType" />
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeD__SubDe__0F624AF8" Association="Self.FK__EmployeeD__SubDe__0F624AF8">
+            <End Role="SubDept" EntitySet="SubDept" />
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__registrat__Desig__75A278F5" Association="Self.FK__registrat__Desig__75A278F5">
+            <End Role="Dtable" EntitySet="Dtable" />
+            <End Role="registration" EntitySet="registration" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmployeeProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Dtable">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Designation" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EmployeeDetails" Relationship="Self.FK__EmployeeD__Desig__05D8E0BE" FromRole="Dtable" ToRole="EmployeeDetails" />
+          <NavigationProperty Name="registrations" Relationship="Self.FK__registrat__Desig__75A278F5" FromRole="Dtable" ToRole="registration" />
+        </EntityType>
+        <EntityType Name="EmployeeDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Firstname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Lastname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="Int64" />
+          <Property Name="Gender" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="ReportingManager" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="JoiningDate" Type="DateTime" Precision="0" />
+          <Property Name="WorkLocation" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Salary" Type="Int32" />
+          <Property Name="ActiveStatus" Type="Boolean" />
+          <Property Name="Street" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Pincode" Type="Int32" />
+          <Property Name="Country" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeType" Type="Int32" />
+          <Property Name="Designation" Type="Int32" />
+          <NavigationProperty Name="Dtable" Relationship="Self.FK__EmployeeD__Desig__05D8E0BE" FromRole="EmployeeDetails" ToRole="Dtable" />
+          <NavigationProperty Name="EmpType" Relationship="Self.FK__EmployeeD__Emplo__04E4BC85" FromRole="EmployeeDetails" ToRole="EmpType" />
+          <Property Name="Department" Type="Int32" />
+          <NavigationProperty Name="Dept" Relationship="EmployeeProjectModel.FK__EmployeeD__Depar__0A9D95DB" FromRole="EmployeeDetail" ToRole="Dept" />
+          <Property Name="SubDepartment" Type="Int32" />
+          <NavigationProperty Name="SubDept" Relationship="EmployeeProjectModel.FK__EmployeeD__SubDe__0F624AF8" FromRole="EmployeeDetail" ToRole="SubDept" />
+        </EntityType>
+        <EntityType Name="EmpType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EmployeeDetails" Relationship="Self.FK__EmployeeD__Emplo__04E4BC85" FromRole="EmpType" ToRole="EmployeeDetails" />
+        </EntityType>
+        <EntityType Name="LoginPage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Designation" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="registration">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phonenumber" Type="Int64" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Designation" Type="Int32" />
+          <NavigationProperty Name="Dtable" Relationship="Self.FK__registrat__Desig__75A278F5" FromRole="registration" ToRole="Dtable" />
+        </EntityType>
+        <Association Name="FK__EmployeeD__Desig__05D8E0BE">
+          <End Role="Dtable" Type="Self.Dtable" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dtable">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EmployeeDetails">
+              <PropertyRef Name="Designation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__registrat__Desig__75A278F5">
+          <End Role="Dtable" Type="Self.Dtable" Multiplicity="0..1" />
+          <End Role="registration" Type="Self.registration" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dtable">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="registration">
+              <PropertyRef Name="Designation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EmployeeD__Emplo__04E4BC85">
+          <End Role="EmpType" Type="Self.EmpType" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EmployeeDetails">
+              <PropertyRef Name="EmployeeType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EmployeeProjectEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Dtables" EntityType="Self.Dtable" />
+          <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetail" />
+          <EntitySet Name="EmpTypes" EntityType="Self.EmpType" />
+          <EntitySet Name="LoginPages" EntityType="Self.LoginPage" />
+          <EntitySet Name="registrations" EntityType="Self.registration" />
+          <AssociationSet Name="FK__EmployeeD__Desig__05D8E0BE" Association="Self.FK__EmployeeD__Desig__05D8E0BE">
+            <End Role="Dtable" EntitySet="Dtables" />
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__registrat__Desig__75A278F5" Association="Self.FK__registrat__Desig__75A278F5">
+            <End Role="Dtable" EntitySet="Dtables" />
+            <End Role="registration" EntitySet="registrations" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EmployeeD__Emplo__04E4BC85" Association="Self.FK__EmployeeD__Emplo__04E4BC85">
+            <End Role="EmpType" EntitySet="EmpTypes" />
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+          <EntitySet Name="Depts" EntityType="EmployeeProjectModel.Dept" />
+          <AssociationSet Name="FK__EmployeeD__Depar__0A9D95DB" Association="EmployeeProjectModel.FK__EmployeeD__Depar__0A9D95DB">
+            <End Role="Dept" EntitySet="Depts" />
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+          <EntitySet Name="SubDepts" EntityType="EmployeeProjectModel.SubDept" />
+          <AssociationSet Name="FK__EmployeeD__SubDe__0F624AF8" Association="EmployeeProjectModel.FK__EmployeeD__SubDe__0F624AF8">
+            <End Role="SubDept" EntitySet="SubDepts" />
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Dept">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Department" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EmployeeDetails" Relationship="EmployeeProjectModel.FK__EmployeeD__Depar__0A9D95DB" FromRole="Dept" ToRole="EmployeeDetail" />
+        </EntityType>
+        <Association Name="FK__EmployeeD__Depar__0A9D95DB">
+          <End Type="EmployeeProjectModel.Dept" Role="Dept" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EmployeeProjectModel.EmployeeDetail" Role="EmployeeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dept">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EmployeeDetail">
+              <PropertyRef Name="Department" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SubDept">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubDepartment" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EmployeeDetails" Relationship="EmployeeProjectModel.FK__EmployeeD__SubDe__0F624AF8" FromRole="SubDept" ToRole="EmployeeDetail" />
+        </EntityType>
+        <Association Name="FK__EmployeeD__SubDe__0F624AF8">
+          <End Type="EmployeeProjectModel.SubDept" Role="SubDept" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EmployeeProjectModel.EmployeeDetail" Role="EmployeeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubDept">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="EmployeeDetail">
+              <PropertyRef Name="SubDepartment" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmployeeProjectModelStoreContainer" CdmEntityContainer="EmployeeProjectEntities">
+          <EntitySetMapping Name="Dtables">
+            <EntityTypeMapping TypeName="EmployeeProjectModel.Dtable">
+              <MappingFragment StoreEntitySet="Dtable">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeDetails">
+            <EntityTypeMapping TypeName="EmployeeProjectModel.EmployeeDetail">
+              <MappingFragment StoreEntitySet="EmployeeDetails">
+                <ScalarProperty Name="SubDepartment" ColumnName="SubDepartment" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="ReportingManager" ColumnName="ReportingManager" />
+                <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
+                <ScalarProperty Name="WorkLocation" ColumnName="WorkLocation" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="EmployeeType" ColumnName="EmployeeType" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmpTypes">
+            <EntityTypeMapping TypeName="EmployeeProjectModel.EmpType">
+              <MappingFragment StoreEntitySet="EmpType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="EmployeeType" ColumnName="EmployeeType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoginPages">
+            <EntityTypeMapping TypeName="EmployeeProjectModel.LoginPage">
+              <MappingFragment StoreEntitySet="LoginPage">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="registrations">
+            <EntityTypeMapping TypeName="EmployeeProjectModel.registration">
+              <MappingFragment StoreEntitySet="registration">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phonenumber" ColumnName="Phonenumber" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Depts">
+            <EntityTypeMapping TypeName="EmployeeProjectModel.Dept">
+              <MappingFragment StoreEntitySet="Dept">
+                <ScalarProperty Name="Department" ColumnName="Department" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubDepts">
+            <EntityTypeMapping TypeName="EmployeeProjectModel.SubDept">
+              <MappingFragment StoreEntitySet="SubDept">
+                <ScalarProperty Name="SubDepartment" ColumnName="SubDepartment" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

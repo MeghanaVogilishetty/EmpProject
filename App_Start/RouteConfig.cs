@@ -16,7 +16,7 @@ namespace EmpProject
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "LoginPages", action = "create", id = UrlParameter.Optional }
+                defaults: new { controller = "LoginPages", action = "Create", id = UrlParameter.Optional }
             );
         }
     }

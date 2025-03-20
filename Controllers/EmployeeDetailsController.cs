@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using EmpProject;
+using PagedList; // Import PagedList Library
+using PagedList.Mvc; // Import PagedList.Mvc Library
 
 namespace EmpProject.Controllers
 {
@@ -16,11 +19,25 @@ namespace EmpProject.Controllers
         private EmployeeProjectEntities db = new EmployeeProjectEntities();
 
         // GET: EmployeeDetails
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-         
-            var employeeDetails = db.EmployeeDetails.Include(e => e.Dtable).Include(e => e.EmpType).Include(e => e.Dept).Include(e => e.SubDept);
-            return View(employeeDetails.ToList());
+
+            int pageSize = 6; // Display 6 records per page
+            int pageNumber = (page ?? 1); // Default to page 1 if not specified
+
+
+            //var employeeDetails = db.EmployeeDetails.Include(e => e.Dtable).Include(e => e.EmpType).Include(e => e.Dept).Include(e => e.SubDept).OrderBy(e => e.ID) // Ensure ordering
+            //          .ToPagedList(pageNumber, pageSize); 
+            //return View(employeeDetails.ToList());
+
+
+            List<EmployeeDetail> employees = db.EmployeeDetails.ToList(); // Fetch employee details
+
+            IPagedList<EmployeeDetail> pagedEmployees = employees.ToPagedList(pageNumber, pageSize);
+
+            return View(pagedEmployees);  // Pass PagedList to the View
+
+
         }
 
         // GET: EmployeeDetails/Details/5
@@ -55,10 +72,24 @@ namespace EmpProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( EmployeeDetail employeeDetail, registration reg, LoginPage loginPage)
+        public ActionResult Create( EmployeeDetail employeeDetail, registration reg, LoginPage loginPage, HttpPostedFileBase resumeFile)
         {
             if (ModelState.IsValid)
             {
+
+                // Handling Resume Upload and Storing as VARBINARY(MAX)
+                if (resumeFile != null && resumeFile.ContentLength > 0)
+                {
+                    using (var binaryReader = new BinaryReader(resumeFile.InputStream))
+                    {
+                        employeeDetail.Resume = binaryReader.ReadBytes(resumeFile.ContentLength);
+                    }
+
+                  
+
+                }
+
+
                 db.LoginPages.Add(loginPage);
                 db.registrations.Add(reg);
                 db.EmployeeDetails.Add(employeeDetail);
@@ -71,24 +102,13 @@ namespace EmpProject.Controllers
                 reg.Phonenumber = employeeDetail.PhoneNumber;
                 reg.Address = employeeDetail.City;
                 reg.Designation = employeeDetail.Designation;
+                reg.ActiveStatus = employeeDetail.ActiveStatus == true;
 
-                // loginPage.Designation = employeeDetail.Designation.ToString();
-                //loginPage.ID = employeeDetail.ID;
-                //loginPage.Username = employeeDetail.Email;
-                //loginPage.Password = "Pro00" + employeeDetail.ID;
-
-
-                LoginPage login = new LoginPage
-                {
-                    Username = employeeDetail.Email,   // Store Email as Username
-                    Password = "Pro00" + employeeDetail.ID, // Store same password format
-                    /*employeeDetail.ActiveStatus = true */ // Assuming new logins are active by default
-                };
-                db.LoginPages.Add(login);
-
-
-
-
+                loginPage.Designation = employeeDetail.Designation.ToString();
+                loginPage.ID = employeeDetail.ID;
+                loginPage.Username = employeeDetail.Email;
+                loginPage.Password = "Pro00" + employeeDetail.ID;
+                loginPage.ActiveStatus = employeeDetail.ActiveStatus == true;
 
 
 
@@ -101,6 +121,18 @@ namespace EmpProject.Controllers
             ViewBag.EmployeeType = new SelectList(db.EmpTypes, "ID", "EmployeeType", employeeDetail.EmployeeType);
             return View(employeeDetail);
         }
+
+        // Method to View Resume
+        public ActionResult ViewResume(int id)
+        {
+            var employee = db.EmployeeDetails.Find(id);
+            if (employee != null && employee.Resume != null)
+            {
+                return File(employee.Resume, "application/octet-stream", "Resume_" + id);
+            }
+            return HttpNotFound();
+        }
+
 
         // GET: EmployeeDetails/Edit/5
         public ActionResult Edit(int? id)

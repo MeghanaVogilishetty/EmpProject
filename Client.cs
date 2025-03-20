@@ -12,12 +12,18 @@ namespace EmpProject
     using System;
     using System.Collections.Generic;
     
-    public partial class LoginPage
+    public partial class Client
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Client()
+        {
+            this.TransferEmployees = new HashSet<TransferEmployee>();
+        }
+    
         public int ID { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Designation { get; set; }
-        public Nullable<bool> ActiveStatus { get; set; }
+        public string Client1 { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TransferEmployee> TransferEmployees { get; set; }
     }
 }

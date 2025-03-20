@@ -14,6 +14,15 @@ namespace EmpProject
     
     public partial class EmployeeDetail
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public EmployeeDetail()
+        {
+            this.PromoteEmployees = new HashSet<PromoteEmployee>();
+            this.PromoteEmployees1 = new HashSet<PromoteEmployee>();
+            this.PromoteEmployees2 = new HashSet<PromoteEmployee>();
+            this.TransferEmployees = new HashSet<TransferEmployee>();
+        }
+    
         public int ID { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
@@ -25,7 +34,7 @@ namespace EmpProject
         public Nullable<System.DateTime> JoiningDate { get; set; }
         public string WorkLocation { get; set; }
         public Nullable<int> Salary { get; set; }
-        public Nullable<bool> ActiveStatus { get; set; }
+        public bool ActiveStatus { get; set; }
         public string Street { get; set; }
         public string City { get; set; }
         public string State { get; set; }
@@ -35,10 +44,19 @@ namespace EmpProject
         public Nullable<int> Designation { get; set; }
         public Nullable<int> Department { get; set; }
         public Nullable<int> SubDepartment { get; set; }
+        public byte[] Resume { get; set; }
     
         public virtual Dtable Dtable { get; set; }
         public virtual EmpType EmpType { get; set; }
         public virtual Dept Dept { get; set; }
         public virtual SubDept SubDept { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PromoteEmployee> PromoteEmployees { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PromoteEmployee> PromoteEmployees1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PromoteEmployee> PromoteEmployees2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TransferEmployee> TransferEmployees { get; set; }
     }
 }

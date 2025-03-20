@@ -12,19 +12,10 @@ namespace EmpProject
     using System;
     using System.Collections.Generic;
     
-    public partial class registration
+    public partial class ReportingManager
     {
         public int ID { get; set; }
-        public string Firstname { get; set; }
-        public string Lastname { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
-        public Nullable<long> Phonenumber { get; set; }
-        public Nullable<System.DateTime> DateOfBirth { get; set; }
-        public string Address { get; set; }
         public Nullable<int> Designation { get; set; }
-        public Nullable<bool> ActiveStatus { get; set; }
     
         public virtual Dtable Dtable { get; set; }
     }

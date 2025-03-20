@@ -6,10 +6,10 @@
     <edmx:Diagrams>
       <Diagram DiagramId="e1800c354e8c4d4d9c45062af0a4d4be" Name="Diagram1">
         <EntityTypeShape EntityType="EmployeeProjectModel.Dtable" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="EmployeeProjectModel.EmployeeDetail" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeProjectModel.EmployeeDetail" Width="1.5" PointX="3.125" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="EmployeeProjectModel.EmpType" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="EmployeeProjectModel.LoginPage" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EmployeeProjectModel.registration" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="EmployeeProjectModel.registration" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
         <AssociationConnector Association="EmployeeProjectModel.FK__EmployeeD__Desig__05D8E0BE" ManuallyRouted="false" />
         <AssociationConnector Association="EmployeeProjectModel.FK__registrat__Desig__75A278F5" ManuallyRouted="false" />
         <AssociationConnector Association="EmployeeProjectModel.FK__EmployeeD__Emplo__04E4BC85" ManuallyRouted="false" />
@@ -17,6 +17,19 @@
         <AssociationConnector Association="EmployeeProjectModel.FK__EmployeeD__Depar__0A9D95DB" />
         <EntityTypeShape EntityType="EmployeeProjectModel.SubDept" Width="1.5" PointX="5.375" PointY="6.875" />
         <AssociationConnector Association="EmployeeProjectModel.FK__EmployeeD__SubDe__0F624AF8" />
+        <EntityTypeShape EntityType="EmployeeProjectModel.PromoteEmployee" Width="1.5" PointX="8.25" PointY="4.75" />
+        <AssociationConnector Association="EmployeeProjectModel.FK__PromoteEm__Desig__14270015" />
+        <AssociationConnector Association="EmployeeProjectModel.FK__PromoteEm__Desig__160F4887" />
+        <AssociationConnector Association="EmployeeProjectModel.FK__PromoteEm__Assig__17F790F9" />
+        <AssociationConnector Association="EmployeeProjectModel.FK__PromoteEm__NewSu__18EBB532" />
+        <AssociationConnector Association="EmployeeProjectModel.FK__PromoteEm__Selec__17036CC0" />
+        <AssociationConnector Association="EmployeeProjectModel.FK__PromoteEm__NewDe__19DFD96B" />
+        <EntityTypeShape EntityType="EmployeeProjectModel.Client" Width="1.5" PointX="3" PointY="14.75" />
+        <EntityTypeShape EntityType="EmployeeProjectModel.TransferEmployee" Width="1.5" PointX="5.25" PointY="9.5" />
+        <AssociationConnector Association="EmployeeProjectModel.FK__TransferE__Clien__2EDAF651" />
+        <AssociationConnector Association="EmployeeProjectModel.FK__TransferE__Selec__2DE6D218" />
+        <EntityTypeShape EntityType="EmployeeProjectModel.ReportingManager" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="EmployeeProjectModel.FK__Reporting__Desig__3C34F16F" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -19,6 +19,10 @@ namespace EmpProject
         {
             this.EmployeeDetails = new HashSet<EmployeeDetail>();
             this.registrations = new HashSet<registration>();
+            this.PromoteEmployees = new HashSet<PromoteEmployee>();
+            this.PromoteEmployees1 = new HashSet<PromoteEmployee>();
+            this.PromoteEmployees2 = new HashSet<PromoteEmployee>();
+            this.ReportingManagers = new HashSet<ReportingManager>();
         }
     
         public int ID { get; set; }
@@ -28,5 +32,13 @@ namespace EmpProject
         public virtual ICollection<EmployeeDetail> EmployeeDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<registration> registrations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PromoteEmployee> PromoteEmployees { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PromoteEmployee> PromoteEmployees1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PromoteEmployee> PromoteEmployees2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ReportingManager> ReportingManagers { get; set; }
     }
 }

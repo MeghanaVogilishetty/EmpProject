@@ -44,42 +44,60 @@ namespace EmpProject.Controllers
         // POST: LoginPages/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+       
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(LoginPage loginPage, EmployeeDetail employeeDetail)
+        public ActionResult Create(registration reg)
         {
-            var user = db.LoginPages.FirstOrDefault(a => a.Username == loginPage.Username && a.Password == loginPage.Password /*&& employeeDetail.ActiveStatus==true*/);
+            EmployeeProjectEntities db = new EmployeeProjectEntities();
+           
+            var emp = db.EmployeeDetails.ToList();
 
-            if (user != null)  // Ensure user exists before accessing properties
+            var user = db.registrations.FirstOrDefault(a => a.Username == reg.Username && a.Password == reg.Password && a.ActiveStatus == true);
+          
+            //if (user == null)
+            //{
+            //    ViewBag.validation = "Invalid Credentials";
+            //    return View(loginPage);
+            //}
+
+            
+
+            if (user.ActiveStatus==true)  // Ensure employee exists before accessing properties
             {
 
-                if (user.Designation == "44")
+                // Store user details in session after successful login
+                Session["UserEmail"] = user.Email;
+                Session["UserName"] = user.Firstname; // Store the first name
+
+
+
+                if (user.Designation == 44)
                 {
                     return RedirectToAction("Index", "Manager");
                 }
-
-
-
-                else if (user.Designation == "22")
+                else if (user.Designation == 22)
                 {
                     return RedirectToAction("Index", "HR");
                 }
-
                 else
                 {
                     return RedirectToAction("Index");
                 }
-            }
-
-
+            } 
             else
             {
                 // Handle invalid credentials
                 ViewBag.validation = "Invalid Credentials";
-                return View(loginPage);
+                return View(reg);
             }
-
         }
+
+
+
+
+
 
         // GET: LoginPages/Edit/5
         public ActionResult Edit(int? id)

@@ -32,5 +32,9 @@ namespace EmpProject
         public virtual DbSet<registration> registrations { get; set; }
         public virtual DbSet<Dept> Depts { get; set; }
         public virtual DbSet<SubDept> SubDepts { get; set; }
+        public virtual DbSet<PromoteEmployee> PromoteEmployees { get; set; }
+        public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<TransferEmployee> TransferEmployees { get; set; }
+        public virtual DbSet<ReportingManager> ReportingManagers { get; set; }
     }
 }

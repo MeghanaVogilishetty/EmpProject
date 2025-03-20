@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="EmployeeProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Client" Type="varchar" MaxLength="30" />
+        </EntityType>
         <EntityType Name="Dept">
           <Key>
             <PropertyRef Name="ID" />
@@ -30,11 +37,10 @@
           <Property Name="PhoneNumber" Type="bigint" />
           <Property Name="Gender" Type="varchar" MaxLength="20" />
           <Property Name="DateOfBirth" Type="date" />
-          <Property Name="ReportingManager" Type="varchar" MaxLength="30" />
           <Property Name="JoiningDate" Type="date" />
           <Property Name="WorkLocation" Type="varchar" MaxLength="30" />
           <Property Name="Salary" Type="int" />
-          <Property Name="ActiveStatus" Type="bit" />
+          <Property Name="ActiveStatus" Type="bit" Nullable="false" />
           <Property Name="Street" Type="nvarchar" MaxLength="30" />
           <Property Name="City" Type="nvarchar" MaxLength="30" />
           <Property Name="State" Type="nvarchar" MaxLength="30" />
@@ -44,6 +50,7 @@
           <Property Name="Designation" Type="int" />
           <Property Name="Department" Type="int" />
           <Property Name="SubDepartment" Type="int" />
+          <Property Name="Resume" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="EmpType">
           <Key>
@@ -60,6 +67,20 @@
           <Property Name="Username" Type="varchar" MaxLength="50" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
           <Property Name="Designation" Type="varchar" MaxLength="30" />
+          <Property Name="ActiveStatus" Type="bit" />
+        </EntityType>
+        <EntityType Name="PromoteEmployee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Designation" Type="int" />
+          <Property Name="NewDesignation" Type="int" />
+          <Property Name="Salary" Type="decimal" Precision="10" Scale="5" />
+          <Property Name="SelectEmployee" Type="int" />
+          <Property Name="AssignTo" Type="int" />
+          <Property Name="NewSupervisor" Type="int" />
+          <Property Name="NewDesignation1" Type="int" />
         </EntityType>
         <EntityType Name="registration">
           <Key>
@@ -75,6 +96,14 @@
           <Property Name="DateOfBirth" Type="date" />
           <Property Name="Address" Type="varchar" MaxLength="50" />
           <Property Name="Designation" Type="int" />
+          <Property Name="ActiveStatus" Type="bit" />
+        </EntityType>
+        <EntityType Name="ReportingManager">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Designation" Type="int" />
         </EntityType>
         <EntityType Name="SubDept">
           <Key>
@@ -82,6 +111,15 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SubDepartment" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="TransferEmployee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SelectEmployee" Type="int" />
+          <Property Name="Client" Type="int" />
+          <Property Name="Salary" Type="decimal" Precision="10" Scale="5" />
         </EntityType>
         <Association Name="FK__EmployeeD__Depar__0A9D95DB">
           <End Role="Dept" Type="Self.Dept" Multiplicity="0..1">
@@ -139,6 +177,80 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PromoteEm__Assig__17F790F9">
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="0..1" />
+          <End Role="PromoteEmployee" Type="Self.PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="AssignTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__Desig__14270015">
+          <End Role="Dtable" Type="Self.Dtable" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PromoteEmployee" Type="Self.PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dtable">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="Designation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__Desig__160F4887">
+          <End Role="Dtable" Type="Self.Dtable" Multiplicity="0..1" />
+          <End Role="PromoteEmployee" Type="Self.PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dtable">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="Designation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__NewDe__19DFD96B">
+          <End Role="Dtable" Type="Self.Dtable" Multiplicity="0..1" />
+          <End Role="PromoteEmployee" Type="Self.PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dtable">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="NewDesignation1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__NewSu__18EBB532">
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="0..1" />
+          <End Role="PromoteEmployee" Type="Self.PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="NewSupervisor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__Selec__17036CC0">
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="0..1" />
+          <End Role="PromoteEmployee" Type="Self.PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="SelectEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__registrat__Desig__75A278F5">
           <End Role="Dtable" Type="Self.Dtable" Multiplicity="0..1" />
           <End Role="registration" Type="Self.registration" Multiplicity="*" />
@@ -151,14 +263,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Reporting__Desig__3C34F16F">
+          <End Role="Dtable" Type="Self.Dtable" Multiplicity="0..1" />
+          <End Role="ReportingManager" Type="Self.ReportingManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dtable">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReportingManager">
+              <PropertyRef Name="Designation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TransferE__Clien__2EDAF651">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="TransferEmployee" Type="Self.TransferEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TransferEmployee">
+              <PropertyRef Name="Client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TransferE__Selec__2DE6D218">
+          <End Role="EmployeeDetails" Type="Self.EmployeeDetails" Multiplicity="0..1" />
+          <End Role="TransferEmployee" Type="Self.TransferEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetails">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TransferEmployee">
+              <PropertyRef Name="SelectEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="EmployeeProjectModelStoreContainer">
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Dept" EntityType="Self.Dept" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Dtable" EntityType="Self.Dtable" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmployeeDetails" EntityType="Self.EmployeeDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EmpType" EntityType="Self.EmpType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LoginPage" EntityType="Self.LoginPage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PromoteEmployee" EntityType="Self.PromoteEmployee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="registration" EntityType="Self.registration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReportingManager" EntityType="Self.ReportingManager" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubDept" EntityType="Self.SubDept" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransferEmployee" EntityType="Self.TransferEmployee" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__EmployeeD__Depar__0A9D95DB" Association="Self.FK__EmployeeD__Depar__0A9D95DB">
             <End Role="Dept" EntitySet="Dept" />
             <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
@@ -175,9 +327,45 @@
             <End Role="SubDept" EntitySet="SubDept" />
             <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__Assig__17F790F9" Association="Self.FK__PromoteEm__Assig__17F790F9">
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__Desig__14270015" Association="Self.FK__PromoteEm__Desig__14270015">
+            <End Role="Dtable" EntitySet="Dtable" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__Desig__160F4887" Association="Self.FK__PromoteEm__Desig__160F4887">
+            <End Role="Dtable" EntitySet="Dtable" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__NewDe__19DFD96B" Association="Self.FK__PromoteEm__NewDe__19DFD96B">
+            <End Role="Dtable" EntitySet="Dtable" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__NewSu__18EBB532" Association="Self.FK__PromoteEm__NewSu__18EBB532">
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__Selec__17036CC0" Association="Self.FK__PromoteEm__Selec__17036CC0">
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployee" />
+          </AssociationSet>
           <AssociationSet Name="FK__registrat__Desig__75A278F5" Association="Self.FK__registrat__Desig__75A278F5">
             <End Role="Dtable" EntitySet="Dtable" />
             <End Role="registration" EntitySet="registration" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Reporting__Desig__3C34F16F" Association="Self.FK__Reporting__Desig__3C34F16F">
+            <End Role="Dtable" EntitySet="Dtable" />
+            <End Role="ReportingManager" EntitySet="ReportingManager" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TransferE__Clien__2EDAF651" Association="Self.FK__TransferE__Clien__2EDAF651">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="TransferEmployee" EntitySet="TransferEmployee" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TransferE__Selec__2DE6D218" Association="Self.FK__TransferE__Selec__2DE6D218">
+            <End Role="EmployeeDetails" EntitySet="EmployeeDetails" />
+            <End Role="TransferEmployee" EntitySet="TransferEmployee" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -192,6 +380,10 @@
           <Property Name="Designation" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="EmployeeDetails" Relationship="Self.FK__EmployeeD__Desig__05D8E0BE" FromRole="Dtable" ToRole="EmployeeDetails" />
           <NavigationProperty Name="registrations" Relationship="Self.FK__registrat__Desig__75A278F5" FromRole="Dtable" ToRole="registration" />
+          <NavigationProperty Name="PromoteEmployees" Relationship="EmployeeProjectModel.FK__PromoteEm__Desig__14270015" FromRole="Dtable" ToRole="PromoteEmployee" />
+          <NavigationProperty Name="PromoteEmployees1" Relationship="EmployeeProjectModel.FK__PromoteEm__Desig__160F4887" FromRole="Dtable" ToRole="PromoteEmployee" />
+          <NavigationProperty Name="PromoteEmployees2" Relationship="EmployeeProjectModel.FK__PromoteEm__NewDe__19DFD96B" FromRole="Dtable" ToRole="PromoteEmployee" />
+          <NavigationProperty Name="ReportingManagers" Relationship="EmployeeProjectModel.FK__Reporting__Desig__3C34F16F" FromRole="Dtable" ToRole="ReportingManager" />
         </EntityType>
         <EntityType Name="EmployeeDetail">
           <Key>
@@ -208,7 +400,7 @@
           <Property Name="JoiningDate" Type="DateTime" Precision="0" />
           <Property Name="WorkLocation" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="Salary" Type="Int32" />
-          <Property Name="ActiveStatus" Type="Boolean" />
+          <Property Name="ActiveStatus" Type="Boolean" Nullable="false" />
           <Property Name="Street" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="City" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="State" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
@@ -222,6 +414,11 @@
           <NavigationProperty Name="Dept" Relationship="EmployeeProjectModel.FK__EmployeeD__Depar__0A9D95DB" FromRole="EmployeeDetail" ToRole="Dept" />
           <Property Name="SubDepartment" Type="Int32" />
           <NavigationProperty Name="SubDept" Relationship="EmployeeProjectModel.FK__EmployeeD__SubDe__0F624AF8" FromRole="EmployeeDetail" ToRole="SubDept" />
+          <NavigationProperty Name="PromoteEmployees" Relationship="EmployeeProjectModel.FK__PromoteEm__Assig__17F790F9" FromRole="EmployeeDetail" ToRole="PromoteEmployee" />
+          <NavigationProperty Name="PromoteEmployees1" Relationship="EmployeeProjectModel.FK__PromoteEm__NewSu__18EBB532" FromRole="EmployeeDetail" ToRole="PromoteEmployee" />
+          <NavigationProperty Name="PromoteEmployees2" Relationship="EmployeeProjectModel.FK__PromoteEm__Selec__17036CC0" FromRole="EmployeeDetail" ToRole="PromoteEmployee" />
+          <NavigationProperty Name="TransferEmployees" Relationship="EmployeeProjectModel.FK__TransferE__Selec__2DE6D218" FromRole="EmployeeDetail" ToRole="TransferEmployee" />
+          <Property Name="Resume" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="EmpType">
           <Key>
@@ -239,6 +436,7 @@
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Designation" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ActiveStatus" Type="Boolean" />
         </EntityType>
         <EntityType Name="registration">
           <Key>
@@ -255,6 +453,7 @@
           <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Designation" Type="Int32" />
           <NavigationProperty Name="Dtable" Relationship="Self.FK__registrat__Desig__75A278F5" FromRole="registration" ToRole="Dtable" />
+          <Property Name="ActiveStatus" Type="Boolean" />
         </EntityType>
         <Association Name="FK__EmployeeD__Desig__05D8E0BE">
           <End Role="Dtable" Type="Self.Dtable" Multiplicity="0..1">
@@ -324,6 +523,46 @@
             <End Role="SubDept" EntitySet="SubDepts" />
             <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
           </AssociationSet>
+          <EntitySet Name="PromoteEmployees" EntityType="EmployeeProjectModel.PromoteEmployee" />
+          <AssociationSet Name="FK__PromoteEm__Desig__14270015" Association="EmployeeProjectModel.FK__PromoteEm__Desig__14270015">
+            <End Role="Dtable" EntitySet="Dtables" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__Desig__160F4887" Association="EmployeeProjectModel.FK__PromoteEm__Desig__160F4887">
+            <End Role="Dtable" EntitySet="Dtables" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__Assig__17F790F9" Association="EmployeeProjectModel.FK__PromoteEm__Assig__17F790F9">
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__NewSu__18EBB532" Association="EmployeeProjectModel.FK__PromoteEm__NewSu__18EBB532">
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__Selec__17036CC0" Association="EmployeeProjectModel.FK__PromoteEm__Selec__17036CC0">
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PromoteEm__NewDe__19DFD96B" Association="EmployeeProjectModel.FK__PromoteEm__NewDe__19DFD96B">
+            <End Role="Dtable" EntitySet="Dtables" />
+            <End Role="PromoteEmployee" EntitySet="PromoteEmployees" />
+          </AssociationSet>
+          <EntitySet Name="Clients" EntityType="EmployeeProjectModel.Client" />
+          <EntitySet Name="TransferEmployees" EntityType="EmployeeProjectModel.TransferEmployee" />
+          <AssociationSet Name="FK__TransferE__Clien__2EDAF651" Association="EmployeeProjectModel.FK__TransferE__Clien__2EDAF651">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="TransferEmployee" EntitySet="TransferEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TransferE__Selec__2DE6D218" Association="EmployeeProjectModel.FK__TransferE__Selec__2DE6D218">
+            <End Role="EmployeeDetail" EntitySet="EmployeeDetails" />
+            <End Role="TransferEmployee" EntitySet="TransferEmployees" />
+          </AssociationSet>
+          <EntitySet Name="ReportingManagers" EntityType="EmployeeProjectModel.ReportingManager" />
+          <AssociationSet Name="FK__Reporting__Desig__3C34F16F" Association="EmployeeProjectModel.FK__Reporting__Desig__3C34F16F">
+            <End Role="Dtable" EntitySet="Dtables" />
+            <End Role="ReportingManager" EntitySet="ReportingManagers" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Dept">
           <Key>
@@ -369,6 +608,162 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PromoteEmployee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Designation" Type="Int32" />
+          <Property Name="NewDesignation" Type="Int32" />
+          <Property Name="Salary" Type="Decimal" Precision="10" Scale="5" />
+          <Property Name="SelectEmployee" Type="Int32" />
+          <Property Name="AssignTo" Type="Int32" />
+          <Property Name="NewSupervisor" Type="Int32" />
+          <NavigationProperty Name="Dtable" Relationship="EmployeeProjectModel.FK__PromoteEm__Desig__14270015" FromRole="PromoteEmployee" ToRole="Dtable" />
+          <NavigationProperty Name="Dtable1" Relationship="EmployeeProjectModel.FK__PromoteEm__Desig__160F4887" FromRole="PromoteEmployee" ToRole="Dtable" />
+          <NavigationProperty Name="EmployeeDetail" Relationship="EmployeeProjectModel.FK__PromoteEm__Assig__17F790F9" FromRole="PromoteEmployee" ToRole="EmployeeDetail" />
+          <NavigationProperty Name="EmployeeDetail1" Relationship="EmployeeProjectModel.FK__PromoteEm__NewSu__18EBB532" FromRole="PromoteEmployee" ToRole="EmployeeDetail" />
+          <NavigationProperty Name="EmployeeDetail2" Relationship="EmployeeProjectModel.FK__PromoteEm__Selec__17036CC0" FromRole="PromoteEmployee" ToRole="EmployeeDetail" />
+          <Property Name="NewDesignation1" Type="Int32" />
+          <NavigationProperty Name="Dtable2" Relationship="EmployeeProjectModel.FK__PromoteEm__NewDe__19DFD96B" FromRole="PromoteEmployee" ToRole="Dtable" />
+        </EntityType>
+        <Association Name="FK__PromoteEm__Desig__14270015">
+          <End Type="EmployeeProjectModel.Dtable" Role="Dtable" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="EmployeeProjectModel.PromoteEmployee" Role="PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dtable">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="Designation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__Desig__160F4887">
+          <End Type="EmployeeProjectModel.Dtable" Role="Dtable" Multiplicity="0..1" />
+          <End Type="EmployeeProjectModel.PromoteEmployee" Role="PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dtable">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="Designation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__Assig__17F790F9">
+          <End Type="EmployeeProjectModel.EmployeeDetail" Role="EmployeeDetail" Multiplicity="0..1" />
+          <End Type="EmployeeProjectModel.PromoteEmployee" Role="PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="AssignTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__NewSu__18EBB532">
+          <End Type="EmployeeProjectModel.EmployeeDetail" Role="EmployeeDetail" Multiplicity="0..1" />
+          <End Type="EmployeeProjectModel.PromoteEmployee" Role="PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="NewSupervisor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__Selec__17036CC0">
+          <End Type="EmployeeProjectModel.EmployeeDetail" Role="EmployeeDetail" Multiplicity="0..1" />
+          <End Type="EmployeeProjectModel.PromoteEmployee" Role="PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="SelectEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PromoteEm__NewDe__19DFD96B">
+          <End Type="EmployeeProjectModel.Dtable" Role="Dtable" Multiplicity="0..1" />
+          <End Type="EmployeeProjectModel.PromoteEmployee" Role="PromoteEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dtable">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PromoteEmployee">
+              <PropertyRef Name="NewDesignation1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Client1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TransferEmployees" Relationship="EmployeeProjectModel.FK__TransferE__Clien__2EDAF651" FromRole="Client" ToRole="TransferEmployee" />
+        </EntityType>
+        <EntityType Name="TransferEmployee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SelectEmployee" Type="Int32" />
+          <Property Name="Client" Type="Int32" />
+          <NavigationProperty Name="Client1" Relationship="EmployeeProjectModel.FK__TransferE__Clien__2EDAF651" FromRole="TransferEmployee" ToRole="Client" />
+          <NavigationProperty Name="EmployeeDetail" Relationship="EmployeeProjectModel.FK__TransferE__Selec__2DE6D218" FromRole="TransferEmployee" ToRole="EmployeeDetail" />
+          <Property Name="Salary" Type="Decimal" Precision="10" Scale="5" />
+        </EntityType>
+        <Association Name="FK__TransferE__Clien__2EDAF651">
+          <End Type="EmployeeProjectModel.Client" Role="Client" Multiplicity="0..1" />
+          <End Type="EmployeeProjectModel.TransferEmployee" Role="TransferEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TransferEmployee">
+              <PropertyRef Name="Client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TransferE__Selec__2DE6D218">
+          <End Type="EmployeeProjectModel.EmployeeDetail" Role="EmployeeDetail" Multiplicity="0..1" />
+          <End Type="EmployeeProjectModel.TransferEmployee" Role="TransferEmployee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TransferEmployee">
+              <PropertyRef Name="SelectEmployee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ReportingManager">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Designation" Type="Int32" />
+          <NavigationProperty Name="Dtable" Relationship="EmployeeProjectModel.FK__Reporting__Desig__3C34F16F" FromRole="ReportingManager" ToRole="Dtable" />
+        </EntityType>
+        <Association Name="FK__Reporting__Desig__3C34F16F">
+          <End Type="EmployeeProjectModel.Dtable" Role="Dtable" Multiplicity="0..1" />
+          <End Type="EmployeeProjectModel.ReportingManager" Role="ReportingManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dtable">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReportingManager">
+              <PropertyRef Name="Designation" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -386,6 +781,7 @@
           <EntitySetMapping Name="EmployeeDetails">
             <EntityTypeMapping TypeName="EmployeeProjectModel.EmployeeDetail">
               <MappingFragment StoreEntitySet="EmployeeDetails">
+                <ScalarProperty Name="Resume" ColumnName="Resume" />
                 <ScalarProperty Name="SubDepartment" ColumnName="SubDepartment" />
                 <ScalarProperty Name="Department" ColumnName="Department" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -395,7 +791,6 @@
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="ReportingManager" ColumnName="ReportingManager" />
                 <ScalarProperty Name="JoiningDate" ColumnName="JoiningDate" />
                 <ScalarProperty Name="WorkLocation" ColumnName="WorkLocation" />
                 <ScalarProperty Name="Salary" ColumnName="Salary" />
@@ -421,6 +816,7 @@
           <EntitySetMapping Name="LoginPages">
             <EntityTypeMapping TypeName="EmployeeProjectModel.LoginPage">
               <MappingFragment StoreEntitySet="LoginPage">
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -431,6 +827,7 @@
           <EntitySetMapping Name="registrations">
             <EntityTypeMapping TypeName="EmployeeProjectModel.registration">
               <MappingFragment StoreEntitySet="registration">
+                <ScalarProperty Name="ActiveStatus" ColumnName="ActiveStatus" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Firstname" ColumnName="Firstname" />
                 <ScalarProperty Name="Lastname" ColumnName="Lastname" />
@@ -456,6 +853,46 @@
             <EntityTypeMapping TypeName="EmployeeProjectModel.SubDept">
               <MappingFragment StoreEntitySet="SubDept">
                 <ScalarProperty Name="SubDepartment" ColumnName="SubDepartment" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PromoteEmployees">
+            <EntityTypeMapping TypeName="EmployeeProjectModel.PromoteEmployee">
+              <MappingFragment StoreEntitySet="PromoteEmployee">
+                <ScalarProperty Name="NewDesignation1" ColumnName="NewDesignation1" />
+                <ScalarProperty Name="NewSupervisor" ColumnName="NewSupervisor" />
+                <ScalarProperty Name="AssignTo" ColumnName="AssignTo" />
+                <ScalarProperty Name="SelectEmployee" ColumnName="SelectEmployee" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="NewDesignation" ColumnName="NewDesignation" />
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="EmployeeProjectModel.Client">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="Client1" ColumnName="Client" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransferEmployees">
+            <EntityTypeMapping TypeName="EmployeeProjectModel.TransferEmployee">
+              <MappingFragment StoreEntitySet="TransferEmployee">
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Client" ColumnName="Client" />
+                <ScalarProperty Name="SelectEmployee" ColumnName="SelectEmployee" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReportingManagers">
+            <EntityTypeMapping TypeName="EmployeeProjectModel.ReportingManager">
+              <MappingFragment StoreEntitySet="ReportingManager">
+                <ScalarProperty Name="Designation" ColumnName="Designation" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

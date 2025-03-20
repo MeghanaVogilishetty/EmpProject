@@ -1,0 +1,88 @@
+﻿@model EmpProject.PromoteEmployee
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>PromoteEmployee</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NewDesignation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NewDesignation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Salary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Salary)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dtable.Designation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dtable.Designation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dtable1.Designation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dtable1.Designation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeDetail.Firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeDetail.Firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeDetail1.Firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeDetail1.Firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeDetail2.Firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeDetail2.Firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dtable2.Designation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dtable2.Designation)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

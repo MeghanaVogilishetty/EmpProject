@@ -1,0 +1,75 @@
+﻿@model IEnumerable<EmpProject.PromoteEmployee>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NewDesignation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Salary)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dtable.Designation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dtable1.Designation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeDetail.Firstname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeDetail1.Firstname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmployeeDetail2.Firstname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dtable2.Designation)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewDesignation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Salary)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dtable.Designation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dtable1.Designation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeDetail.Firstname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeDetail1.Firstname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmployeeDetail2.Firstname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dtable2.Designation)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>

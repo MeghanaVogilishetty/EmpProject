@@ -5,28 +5,12 @@
 }
 
 
-@*@if (TempData["InactiveUser"] != null)
-{
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Account Inactive',
-                text: '@Html.Raw(TempData["InactiveUser"])'
-            });
-        });
-    </script>
-}*@
-
-
-
 
 <style>
 
 
 
-    .btn-default {
+   .btn-default {
         background-color: #c591ed;
         margin-left: 90px;
         margin-top: 10px;
@@ -64,6 +48,12 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+
+    @*<div>
+        <p style="color:red;text-align:center"> @ViewBag.validation</p>
+
+    </div>*@
+
 
     <div class="form-horizontal">
         <h4 style="text-align:center;color:darkred;margin-top:20px;font-weight:bold;">Login Page</h4>

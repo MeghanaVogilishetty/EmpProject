@@ -1,44 +1,249 @@
-﻿@model IEnumerable<EmpProject.EmployeeDetail>
+﻿@*@model PagedList.IPagedList<EmpProject.EmployeeDetail>
+    @using PagedList.Mvc
+    @using PagedList
+
+
+
+    @{
+        ViewBag.Title = "Index";
+        var isHRPage = ViewContext.RouteData.Values["Controller"]?.ToString() == "HR";
+    }
+
+
+    @{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+    <style>
+        /* Pagination Container */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+            /* Pagination Links */
+            .pagination a, .pagination span {
+                color: #007bff;
+                padding: 8px 12px;
+                margin: 0 4px;
+                text-decoration: none;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                transition: all 0.3s ease-in-out;
+            }
+
+            /* Active Page */
+            .pagination .active span {
+                background-color: #007bff;
+                color: white;
+                border: 1px solid #007bff;
+            }
+
+            /* Hover Effect */
+            .pagination a:hover {
+                background-color: #007bff;
+                color: white;
+                border-color: #007bff;
+            }
+
+            /* Disabled Page */
+            .pagination .disabled span {
+                color: #ccc;
+                cursor: not-allowed;
+                border: 1px solid #eee;
+                background-color: #f8f8f8;
+            }
+
+            /* First & Last Page Buttons */
+            .pagination .PagedList-skipToFirst,
+            .pagination .PagedList-skipToLast {
+                font-weight: bold;
+            }
+    </style>
+
+
+    <h2>Employee Details</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.First().Firstname)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Lastname)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Email)</th>
+            <th>@Html.DisplayNameFor(model => model.First().PhoneNumber)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Gender)</th>
+            <th>@Html.DisplayNameFor(model => model.First().DateOfBirth)</th>
+            <th>@Html.DisplayNameFor(model => model.First().ReportingManager)</th>
+            <th>@Html.DisplayNameFor(model => model.First().JoiningDate)</th>
+            <th>@Html.DisplayNameFor(model => model.First().WorkLocation)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Salary)</th>
+            <th>@Html.DisplayNameFor(model => model.First().ActiveStatus)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Street)</th>
+            <th>@Html.DisplayNameFor(model => model.First().City)</th>
+            <th>@Html.DisplayNameFor(model => model.First().State)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Pincode)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Country)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Dtable.Designation)</th>
+            <th>@Html.DisplayNameFor(model => model.First().EmpType.EmployeeType)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Dept.Department)</th>
+            <th>@Html.DisplayNameFor(model => model.First().SubDept.SubDepartment)</th>
+            <th>@Html.DisplayNameFor(model => model.First().Resume)</th>
+
+            <th>Actions</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Firstname)</td>
+                <td>@Html.DisplayFor(modelItem => item.Lastname)</td>
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                <td>@Html.DisplayFor(modelItem => item.Gender)</td>
+                <td>@Html.DisplayFor(modelItem => item.DateOfBirth)</td>
+                <td>@Html.DisplayFor(modelItem => item.ReportingManager)</td>
+                <td>@Html.DisplayFor(modelItem => item.JoiningDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.WorkLocation)</td>
+                <td>@Html.DisplayFor(modelItem => item.Salary)</td>
+                <td>@Html.DisplayFor(modelItem => item.ActiveStatus)</td>
+                <td>@Html.DisplayFor(modelItem => item.Street)</td>
+                <td>@Html.DisplayFor(modelItem => item.City)</td>
+                <td>@Html.DisplayFor(modelItem => item.State)</td>
+                <td>@Html.DisplayFor(modelItem => item.Pincode)</td>
+                <td>@Html.DisplayFor(modelItem => item.Country)</td>
+                <td>@Html.DisplayFor(modelItem => item.Dtable.Designation)</td>
+                <td>@Html.DisplayFor(modelItem => item.EmpType.EmployeeType)</td>
+                <td>@Html.DisplayFor(modelItem => item.Dept.Department)</td>
+                <td>@Html.DisplayFor(modelItem => item.SubDept.SubDepartment)</td>
+                <td>
+                    @if (item.Resume != null)
+                    {
+                        <a href="@Url.Action("ViewResume", "EmployeeDetails", new { id = item.ID })" target="_blank">View Resume</a>
+                    }
+                    else
+                    {
+                        <span>No Resume</span>
+                    }
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+    </table>
+
+
+    <div>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    </div>
+
+    <div class="pagination">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+    </div>*@
+
+
+@model PagedList.IPagedList<EmpProject.EmployeeDetail>
+@using PagedList.Mvc
+@using PagedList
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "HR Dashboard";
     var isHRPage = ViewContext.RouteData.Values["Controller"]?.ToString() == "HR";
 }
 
-
 @{ Layout = "~/Views/Shared/_Layout.cshtml"; }
 
+<style>
+    /* Pagination Container */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
 
+        /* Pagination Links */
+        .pagination a, .pagination span {
+            color: #007bff;
+            padding: 8px 12px;
+            margin: 0 4px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
 
+        /* Active Page */
+        .pagination .active span {
+            background-color: #007bff;
+            color: white;
+            border: 1px solid #007bff;
+        }
 
+        /* Hover Effect */
+        .pagination a:hover {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
 
-<h2>Employee Details</h2>
+        /* Disabled Page */
+        .pagination .disabled span {
+            color: #ccc;
+            cursor: not-allowed;
+            border: 1px solid #eee;
+            background-color: #f8f8f8;
+        }
+
+        /* First & Last Page Buttons */
+        .pagination .PagedList-skipToFirst,
+        .pagination .PagedList-skipToLast {
+            font-weight: bold;
+        }
+</style>
+
+@if (!string.IsNullOrEmpty(ViewBag.FirstName))
+{
+    @*<h3>Welcome, @ViewBag.FirstName!</h3>*@
+}
+else
+{
+    <h3>Welcome, Guest!</h3>
+}
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
 <table class="table">
     <tr>
-        <th>@Html.DisplayNameFor(model => model.Firstname)</th>
-        <th>@Html.DisplayNameFor(model => model.Lastname)</th>
-        <th>@Html.DisplayNameFor(model => model.Email)</th>
-        <th>@Html.DisplayNameFor(model => model.PhoneNumber)</th>
-        <th>@Html.DisplayNameFor(model => model.Gender)</th>
-        <th>@Html.DisplayNameFor(model => model.DateOfBirth)</th>
-        <th>@Html.DisplayNameFor(model => model.ReportingManager)</th>
-        <th>@Html.DisplayNameFor(model => model.JoiningDate)</th>
-        <th>@Html.DisplayNameFor(model => model.WorkLocation)</th>
-        <th>@Html.DisplayNameFor(model => model.Salary)</th>
-        <th>@Html.DisplayNameFor(model => model.ActiveStatus)</th>
-        <th>@Html.DisplayNameFor(model => model.Street)</th>
-        <th>@Html.DisplayNameFor(model => model.City)</th>
-        <th>@Html.DisplayNameFor(model => model.State)</th>
-        <th>@Html.DisplayNameFor(model => model.Pincode)</th>
-        <th>@Html.DisplayNameFor(model => model.Country)</th>
-        <th>@Html.DisplayNameFor(model => model.Dtable.Designation)</th>
-        <th>@Html.DisplayNameFor(model => model.EmpType.EmployeeType)</th>
-        <th>@Html.DisplayNameFor(model => model.Dept.Department)</th>
-        <th>@Html.DisplayNameFor(model => model.SubDept.SubDepartment)</th>
+        <th>@Html.DisplayNameFor(model => model.First().Firstname)</th>
+        <th>@Html.DisplayNameFor(model => model.First().Lastname)</th>
+        <th>@Html.DisplayNameFor(model => model.First().Email)</th>
+        <th>@Html.DisplayNameFor(model => model.First().PhoneNumber)</th>
+        <th>@Html.DisplayNameFor(model => model.First().Gender)</th>
+        <th>@Html.DisplayNameFor(model => model.First().DateOfBirth)</th>
+        <th>@Html.DisplayNameFor(model => model.First().ReportingManager)</th>
+        <th>@Html.DisplayNameFor(model => model.First().JoiningDate)</th>
+        <th>@Html.DisplayNameFor(model => model.First().WorkLocation)</th>
+        <th>@Html.DisplayNameFor(model => model.First().Salary)</th>
+        <th>@Html.DisplayNameFor(model => model.First().ActiveStatus)</th>
+        <th>@Html.DisplayNameFor(model => model.First().Street)</th>
+        <th>@Html.DisplayNameFor(model => model.First().City)</th>
+        <th>@Html.DisplayNameFor(model => model.First().State)</th>
+        <th>@Html.DisplayNameFor(model => model.First().Pincode)</th>
+        <th>@Html.DisplayNameFor(model => model.First().Country)</th>
+        <th>@Html.DisplayNameFor(model => model.First().Dtable.Designation)</th>
+        <th>@Html.DisplayNameFor(model => model.First().EmpType.EmployeeType)</th>
+        <th>@Html.DisplayNameFor(model => model.First().Dept.Department)</th>
+        <th>@Html.DisplayNameFor(model => model.First().SubDept.SubDepartment)</th>
+        <th>@Html.DisplayNameFor(model => model.First().Resume)</th>
         <th>Actions</th>
     </tr>
 
@@ -66,6 +271,17 @@
             <td>@Html.DisplayFor(modelItem => item.Dept.Department)</td>
             <td>@Html.DisplayFor(modelItem => item.SubDept.SubDepartment)</td>
             <td>
+                @if (item.Resume != null)
+                {
+                    <a href="@Url.Action("ViewResume", "EmployeeDetails", new { id = item.ID })" target="_blank">View Resume</a>
+                }
+                else
+                {
+                    <span>No Resume</span>
+                }
+            </td>
+
+            <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                 @Html.ActionLink("Details", "Details", new { id = item.ID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.ID })
@@ -74,4 +290,17 @@
     }
 </table>
 
-}
+<div>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+</div>
+
+<div class="pagination">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</div>
+
+
+
+
+
+
+

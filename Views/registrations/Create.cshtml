@@ -4,16 +4,60 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<style>
+
+    .form-horizontal {
+        background-color: #B49FEA;
+        width: 400px;
+        height: 800px;
+        padding: 20px;
+        /*margin: 50px;*/
+        display: block;
+        border-radius: 20px;
+        margin-left: 400px;
+    }
+
+    .form-control {
+        display: block;
+        /* margin-top: 7px;*/
+        width: 90%;
+    }
+
+    .col-md-2 {
+        margin-top: 7px;
+    }
+
+    .btn-default {
+        background-color: #095FF5;
+        margin-top: 15px;
+        color: white;
+    }
+
+        .btn-default:hover {
+            background-color: #2A428D;
+            margin-top: 15px;
+            color: white;
+        }
+
+    h2 {
+        text-align: center;
+        margin-top: 40px;
+        margin-right: 100px;
+        color: /*#CD3A27*/ #AA3121;
+        font-weight: bold;
+    }
+</style>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
+    <h2>Registration</h2>
+
     <div class="form-horizontal">
-        <h4>registration</h4>
-        <hr />
+
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -103,7 +147,7 @@
     </div>
 }
 
-<div>
+<div style="margin-left:410px;">
     @Html.ActionLink("Back to List", "Index")
 </div>
 

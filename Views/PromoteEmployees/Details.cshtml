@@ -1,0 +1,82 @@
+﻿@model EmpProject.PromoteEmployee
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PromoteEmployee</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NewDesignation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NewDesignation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Salary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Salary)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dtable.Designation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dtable.Designation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dtable1.Designation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dtable1.Designation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeDetail.Firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeDetail.Firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeDetail1.Firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeDetail1.Firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeDetail2.Firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeDetail2.Firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dtable2.Designation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dtable2.Designation)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

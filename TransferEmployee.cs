@@ -12,12 +12,14 @@ namespace EmpProject
     using System;
     using System.Collections.Generic;
     
-    public partial class LoginPage
+    public partial class TransferEmployee
     {
         public int ID { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public string Designation { get; set; }
-        public Nullable<bool> ActiveStatus { get; set; }
+        public Nullable<int> SelectEmployee { get; set; }
+        public Nullable<int> Client { get; set; }
+        public Nullable<decimal> Salary { get; set; }
+    
+        public virtual Client Client1 { get; set; }
+        public virtual EmployeeDetail EmployeeDetail { get; set; }
     }
 }
